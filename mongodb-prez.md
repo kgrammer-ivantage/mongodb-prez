@@ -109,6 +109,10 @@ so the software needed to __scale gracefully across multiple machines__
 ##Replica Sets
 !["heatbeat"](http://docs.mongodb.org/master/_images/replica-set-primary-with-two-secondaries.png)
 
+* When Primary node fails, a Secondary node is elected to be the new Primary
+* __Arbiters__ are used to decide which node should take over as Primary
+* When the original Primary comse back, it enters _recovery mode_ until it can become the Primary again
+
 
 ##Sharding
 
