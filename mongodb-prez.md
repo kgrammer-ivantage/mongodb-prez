@@ -88,7 +88,26 @@ so the software needed to __scale gracefully across multiple machines__
 	<pre><code>db.runCommand( {collMod: "collection1", usePowerOf2Sizes : true })</code></pre>
 
 
+##Scaling
+<table width=><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>
+<img src="http://image.slidesharecdn.com/7-18sharding-130718171220-phpapp01/95/slide-7-638.jpg" alt="vertical scaling" width="478" height="359" />
+<ul><li>More powerful machines = more $$$ </li><li>Single machine = single point of failure</ul>
+</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>
+<img src="http://image.slidesharecdn.com/7-18sharding-130718171220-phpapp01/95/slide-8-638.jpg" alt="horizontal scaling" width="478" height="359" />
+<ul><li>Can use lots of cheap machines </li></ul>
+</td></tr></table>
+
+
 ##Replica Sets
+!["replica sets"](http://docs.mongodb.org/master/_images/replica-set-read-write-operations-primary.png)
+
+* Writes __only__ to Primary node
+* Reads can come from Secondary nodes to distribute load
+	* Secondary nodes may not be completely up to date
+
+
+##Replica Sets
+!["heatbeat"](http://docs.mongodb.org/master/_images/replica-set-primary-with-two-secondaries.png)
 
 
 ##Sharding
@@ -98,10 +117,10 @@ so the software needed to __scale gracefully across multiple machines__
 
 
 ##Command Line Tools
-* mondodump and mongostore
-	* backup and store DBs easily in the native BSON format
-* mongoexport and mongoimport
-	* json, csv, tsv
+* <code>mondodump</code> and <code>mongostore</code>
+	* backup and store DBs easily in native BSON format
+* <code>mongoexport</code> and <code>mongoimport</code>
+	* Import/Export DBs as __JSON__, __CSV__, __TSV__
 
 
 ##Indexing
