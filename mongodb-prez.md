@@ -27,17 +27,57 @@ so the software needed to __scale gracefully across multiple machines__
 * partition --> shard
 
 
-##Documents
-* bson
+##Structure
+* A __collection__ is made up of _documents_
+* A __document__ is made up of _fields_
+* A __Cursor__ is returned when you query for data,
+	* _Cursors_ can be used to count, skip ahead, etc. before they execute
+
+
+##Relational vs Document-Oriented DBs
+* A relational DB defines its _columns_ at the _table_ level
+* A document-oriented DB defines its _fields_ at the _document_ level
+	* each document can have its own structure
 
 
 ##Documents
-* _id object id
+<pre><code>
+{
+	_id: ObjectId("507f1f77bcf86cd799439011"),
+	name: "Dr. Bernie Peyton",
+	occupation: ["Bear Biologist", "Paperfolder"] 
+}
+</code></pre>
+* ___id__ - every document has a unique __Object Id__
+* A 12-byte BSON object that acts as a _primary key_
+	* a 4-byte value representing the seconds since the Unix epoch,
+	* a 3-byte machine identifier,
+	* a 2-byte process id, and
+	* a 3-byte counter, starting with a random value.
+
+<img src="http://www.worldwideinterweb.com/images/blogphotos/Funny/Greatest%20Job%20Titles%20Ever/best%20jobs%20titles%20ever.png" />
+
 
 
 ##Modeling Data
-* one-to-one and one-to-many
-* power of 2 (underlying memory usage)
+* __No Joins__
+* Denormalized data
+	* multiple tables --> single collection
+	* a single seek operation reduces query time
+
+
+
+##Data Storage
+* Padding factor starts at 0,
+	* as MongoDB learns DB usage, it changes padding
+* If document exceeds space in memory location,
+	* the whole document is deleted and rewritten in a new location
+* __Power of 2__
+	* you can tell MongoDB to use power of 2 sizes to pad document
+	* 256, 512, etc...
+
+
+
 * Referencing vs Embedding
 
 
@@ -52,7 +92,9 @@ so the software needed to __scale gracefully across multiple machines__
 
 ##Command Line Tools
 * mondodump and mongostore
+	* backup and store DBs easily in the native BSON format
 * mongoexport and mongoimport
+	* json, csv, tsv
 
 
 ##Indexing
