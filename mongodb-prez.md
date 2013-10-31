@@ -106,15 +106,35 @@ so the software needed to __scale gracefully across multiple machines__
 	* Secondary nodes may not be completely up to date
 
 
-##Replica Sets
+##Replica Sets (cont.)
 !["heatbeat"](http://docs.mongodb.org/master/_images/replica-set-primary-with-two-secondaries.png)
 
 * When Primary node fails, a Secondary node is elected to be the new Primary
 * __Arbiters__ are used to decide which node should take over as Primary
-* When the original Primary comse back, it enters _recovery mode_ until it can become the Primary again
+* When the original Primary comes back, it enters _recovery mode_
+	* If this node's priority is highest, it will force an election and become the Primary again
 
 
 ##Sharding
+* Separates collection data across multiple servers
+<img src="http://docs.mongodb.org/master/_images/sharded-cluster-primary-shard.png" alt="shards" height="327" width="300" />
+* __Shard__ - a node of the cluster. Can be a single <code>mongod</code> or a replica set
+* __Chunk__ - shards are split up into chunks of 64 MB or less. 
+* __Config Server__ - Holds the cluster's metadata. Stores cluster chunk ranges and locations
+* __Shard Key__ - (user defined) defines a range of data to distribute the data among the shards
+	* __choosing a good shard key is _very_ important__
+
+
+##Sharding Architecture
+!["shard keys"](http://docs.mongodb.org/master/_images/sharded-cluster.png)
+* __mongos__ - Routes reads/writes  from applications to shards
+	* Applications do not access the shards directly
+
+
+##Who Sharded?
+* When should we shard?
+	* when throughput exceeds I/O
+	!["working set"](http://image.slidesharecdn.com/7-18sharding-130718171220-phpapp01/95/slide-6-638.jpg)
 
 
 ##Javascript Shell & Drivers
