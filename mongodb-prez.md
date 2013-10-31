@@ -3,9 +3,9 @@
 
 ##A Little History
 * 10gen, a New York based start-up began working on a software PAAS in 2007
-* Included an application server and a database.
-* Goal was for developers to be able to concentrate on the application code,
-so the software needed to __scale gracefully across multiple machines__
+	* Included an application server and a database.
+* Goal was for developers to be able to concentrate on the application code
+	* the software needed to __scale gracefully across multiple machines__
 * Developers didn't like giving up so much control over their technology stack
 * 10gen dropped the application server and concentrated solely on the database
 * Result: __MongoDB__
@@ -46,7 +46,7 @@ so the software needed to __scale gracefully across multiple machines__
 }</code></pre>
 
 
-##Documents
+##Documents (cont.)
 <img src="http://www.worldwideinterweb.com/images/blogphotos/Funny/Greatest%20Job%20Titles%20Ever/best%20jobs%20titles%20ever.png" alt="berniepeyton" height="300" width="400"/>
 <pre><code>{
 	_id: ObjectId("507f1f77bcf86cd799439011"),
@@ -69,20 +69,21 @@ so the software needed to __scale gracefully across multiple machines__
 
 ##Modeling Data
 * __No Joins__
-* Denormalized data
+* __Denormalized Data__
 	* multiple tables --> single collection
 	* a single seek operation reduces query time
-* Embedding
+* __Embedding__
 	* embedding a document in another document allows for a single-query to retrieve all information
 
 
 ##Data Storage
-* Padding factor starts at 0,
+* A document's padding factor starts at 0,
 	* as MongoDB learns DB usage, it changes padding
 * If document exceeds space in memory location,
 	* the whole document is deleted and rewritten in a new location
+	* this can be costly if done many times a second
 * __Power of 2__
-	* you can tell MongoDB to use power of 2 sizes to pad document
+	* you can tell MongoDB to use _power of 2_ sizes to pad document
 	* 256, 512, etc...
 	
 	<pre><code>db.runCommand( {collMod: "collection1", usePowerOf2Sizes : true })</code></pre>
@@ -110,8 +111,9 @@ so the software needed to __scale gracefully across multiple machines__
 !["heatbeat"](http://docs.mongodb.org/master/_images/replica-set-primary-with-two-secondaries.png)
 
 * When Primary node fails, a Secondary node is elected to be the new Primary
-* __Arbiters__ are used to decide which node should take over as Primary
-* When the original Primary comes back, it enters _recovery mode_
+* __Arbiters__ are nodes used to decide which node should take over as Primary
+	* Obviously this node should not live on the same machine as Primary
+* When the original Primary comes back, it enters __recovery mode__
 	* If this node's priority is highest, it will force an election and become the Primary again
 
 
@@ -126,9 +128,11 @@ so the software needed to __scale gracefully across multiple machines__
 
 
 ##Sharding Architecture
+
 !["shard keys"](http://docs.mongodb.org/master/_images/sharded-cluster.png)
-* __mongos__ - Routes reads/writes  from applications to shards
-	* Applications do not access the shards directly
+
+* Applications do not access the shards directly
+	* __mongos__ - routes the reads/writes from the applications to the shards
 
 
 ##Who Sharded?
@@ -152,10 +156,10 @@ Drivers available for a multitude of platforms
 
 
 ##Command Line Tools
-* <code>mondodump</code> and <code>mongostore</code>
+* `mondodump` and `mongostore`
 	* backup and store DBs easily in native BSON format
-* <code>mongoexport</code> and <code>mongoimport</code>
-	* Import/Export DBs as __JSON__, __CSV__, __TSV__
+* `mongoexport` and `mongoimport`
+	* Import/Export DBs as JSON, CSV, TSV
 
 
 ##Indexing
