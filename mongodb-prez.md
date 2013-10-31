@@ -12,19 +12,15 @@ so the software needed to __scale gracefully across multiple machines__
 
 
 ##Design Features
-* __NoSQL__
-* __ad hoc queries__
-* __horizontally scalable__
-* __schemaless database__
+* NoSQL (Non-relational)
+* ad hoc queries
+* horizontally scalable
+* schemaless database
+* __Performance is a primary goal!__
 
 
-##The Language of MongoDB
-* table --> collection
-* row --> document
-* index --> index
-* join --> embedded document
-* foreign key --> reference
-* partition --> shard
+##Terminology
+<img src="http://image.slidesharecdn.com/10-17rdbmstomongodb-131016140544-phpapp01/95/slide-4-638.jpg?" height=574 width=765 alt="terminology" />
 
 
 ##Structure
@@ -41,13 +37,25 @@ so the software needed to __scale gracefully across multiple machines__
 
 
 ##Documents
-<pre><code>
-{
+<img src="http://www.uproxx.com/wp-content/uploads/2012/09/worldwar11.jpeg" alt="donkrasin" height="300" width="400"/>
+<pre><code>{
+	_id: ObjectId("505bd76785ebb509fc183733"),
+	name: "Don Krasin",
+	occupation: ["World War 11 Veteran"],
+	birthyear: 5023
+}</code></pre>
+
+
+##Documents
+<img src="http://www.worldwideinterweb.com/images/blogphotos/Funny/Greatest%20Job%20Titles%20Ever/best%20jobs%20titles%20ever.png" alt="berniepeyton" height="300" width="400"/>
+<pre><code>{
 	_id: ObjectId("507f1f77bcf86cd799439011"),
 	name: "Dr. Bernie Peyton",
 	occupation: ["Bear Biologist", "Paperfolder"] 
-}
-</code></pre>
+}</code></pre>
+
+
+##Object ID
 * ___id__ - every document has a unique __Object Id__
 * A 12-byte BSON object that acts as a _primary key_
 	* a 4-byte value representing the seconds since the Unix epoch,
@@ -55,7 +63,7 @@ so the software needed to __scale gracefully across multiple machines__
 	* a 2-byte process id, and
 	* a 3-byte counter, starting with a random value.
 
-<img src="http://www.worldwideinterweb.com/images/blogphotos/Funny/Greatest%20Job%20Titles%20Ever/best%20jobs%20titles%20ever.png" />
+<pre><code>_id: ObjectId("507f1f77bcf86cd799439011")</code></pre>
 
 
 
@@ -64,7 +72,8 @@ so the software needed to __scale gracefully across multiple machines__
 * Denormalized data
 	* multiple tables --> single collection
 	* a single seek operation reduces query time
-
+* Embedding
+	* embedding a document in another document allows for a single-query to retrieve all information
 
 
 ##Data Storage
@@ -75,10 +84,8 @@ so the software needed to __scale gracefully across multiple machines__
 * __Power of 2__
 	* you can tell MongoDB to use power of 2 sizes to pad document
 	* 256, 512, etc...
-
-
-
-* Referencing vs Embedding
+	
+	<pre><code>db.runCommand( {collMod: "collection1", usePowerOf2Sizes : true })</code></pre>
 
 
 ##Replica Sets
