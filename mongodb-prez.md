@@ -119,6 +119,9 @@ so the software needed to __scale gracefully across multiple machines__
 		* Final result limited by maximum BSON document size
 		(16 MB) - problem should be alleviated in 2.6
 		* Pipeline operator memory limited to 10% of RAM
+
+
+## Data Aggregation (cont.)
 * MongoDB Map-Reduce
 	* Inteded for complex data analysis
 	* Implemented w/ Javascript
@@ -134,13 +137,29 @@ to the next.
 
 __Operators__
 
-* $match
-* $group
-* $sort
-* $limit
-* $project
-* $unwind
-* $geoNear
+* $match-    _Filter documents_
+* $group-    _Group documents by an identifier_
+* $sort-     _Sorts documents according to a sort key_
+* $limit-    _Restrict the number of documents returned_
+* $skip-     _Skips over a number of documents, passes remainder_
+* $project-  _Reshape documents by renaming, adding, or removing fields_
+* $unwind-   _Peels elements off an array, turns them into stream of documents_
+* $geoNear-  _Returns documents in order of nearest to farthest from a point_
+
+
+## Aggregation Framework Example
+<pre><code>
+db.pokemon.aggregate(
+	{ $match: {$gte: {$spatk: 100}}},
+	{ $project: {name: -1, type: 1, spatk: 1}},
+	{ $group: {_id: "$type", powerLevel: { $sum: "$spatk"}}}
+)
+</code></pre>
+
+
+<img src="http://imgur.com/QgH040j.png" width="800" height="500"></img>
+
+<img src="http://images.wikia.com/cardfight/images/7/7b/It-s-over-9000-its-over-9000-29849302-496-370.jpg" width="400" height="300"></img>
 
 
 ##Next Release Features
