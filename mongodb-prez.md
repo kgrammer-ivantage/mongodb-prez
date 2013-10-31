@@ -128,9 +128,36 @@ so the software needed to __scale gracefully across multiple machines__
 
 
 ##Indexing
-* b-tree
-* 64 indexes (max) on a collection
-* only 1 index used per query
+* Can be defined pretty much anywhere, support secondary indexes
+	* _id, Single field, Compound, Multikey (arrays)
+	* Geospatial, Text
+	* Sub-documents and fields of sub-documents
+	* Unique and Sparse
+* Used properly improves read speed, writes take a hit
+* Uses B-Trees
+<img src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/65/B-tree.svg/400px-B-tree.svg.png"></img>
+* Limitations
+	* 64 indexes (max) on a collection
+	* Only 1 index used per query
+
+
+## Creating and Using Indexes
+<pre><code>
+db.pokemon.ensureIndex( { pokedexnum: 1}, { background: true, unique:true})
+</pre></code>
+
+__Options__
+
+* background
+* unique, dropDups (_DANGEROUS!_)
+* sparse
+
+<pre><code>
+db.pokemon.find( { pokedexnum: { $gt: 151, $lte: 251}})
+</pre></code>
+
+* Use `.hint()` to specify which index to use
+* `.explain()` is useful for debugging
 
 
 ##Data Aggregation
@@ -173,7 +200,7 @@ __Operators__
 ## Aggregation Framework Example
 <pre><code>
 db.pokemon.aggregate(
-	{ $match: {$gte: {$spatk: 100}}},
+	{ $match: {spatk: {$gte: 100}}},
 	{ $project: {name: -1, type: 1, spatk: 1}},
 	{ $group: {_id: "$type", powerLevel: { $sum: "$spatk"}}}
 )
