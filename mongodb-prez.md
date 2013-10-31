@@ -119,6 +119,17 @@ so the software needed to __scale gracefully across multiple machines__
 
 ##Javascript Shell & Drivers
 
+`mongo` command - fully featured Javascript shell
+
+Drivers available for a multitude of platforms
+
+* NodeJS
+* Python
+* Ruby
+* PHP
+* ... and many more
+
+
 
 ##Command Line Tools
 * <code>mondodump</code> and <code>mongostore</code>
