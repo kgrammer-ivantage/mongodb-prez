@@ -104,7 +104,42 @@ so the software needed to __scale gracefully across multiple machines__
 
 
 ##Data Aggregation
-* Map-Reduce
+* Pre-aggregated data
+* Aggregation Framework
+	* Data processing pipeline
+	* Good for performing ad-hoc queries
+	* Limitations
+		* Final result limited by maximum BSON document size
+		(16 MB) - problem should be alleviated in 2.6
+		* Pipeline operator memory limited to 10% of RAM
+* MongoDB Map-Reduce
+	* Inteded for complex data analysis
+	* Implemented w/ Javascript
+	* Limitations
+		* Hard to debug
+		* Slower than aggregation framework - used primarily for batch jobs
+* External Map-Reduce (e.g. Hadoop)
+
+
+## Aggregation Framework
+Starting with all documents in a collection, stream data from one aggregator
+to the next.
+
+__Operators__
+
+* $match
+* $group
+* $sort
+* $limit
+* $project
+* $unwind
+* $geoNear
 
 
 ##Next Release Features
+* Text search out of beta (indexing on string and array of string fields)
+* Aggregation changes - db.collection.aggregate() returns a cursor instead
+  of an array of documents.
+* LDAP Authentication
+* Geospatial improvements
+
